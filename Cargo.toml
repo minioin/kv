@@ -1,0 +1,22 @@
+[package]
+name = "kv"
+version = "0.1.0"
+description = "Simple Key Value Server implemented with sled."
+authors = ["Minioin <minioin@protonmail.com>"]
+edition = "2018"
+license = "MIT"
+readme = "Readme.md"
+repository = "https://github.com/minioin/kv"
+categories = ["kv", "key-value", "database"]
+keywords = ["kv", "keyvalue", "database"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-std = { version = "1.7.0", features = ["attributes"] }
+chrono = "0.4.19"
+dirs = "3.0.1"
+serde = "1.0.117"
+serde_cbor = "0.11.1"
+sled = "0.34.6"
+thiserror = "1.0.22"
+tide = "0.15.0"

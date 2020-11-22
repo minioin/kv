@@ -1,0 +1,14 @@
+[Unit]
+Description=Key Value Service
+Wants=network-online.target
+
+[Service]
+Restart=always
+KillMode=none
+Type=forking
+ExecStartPre=-podman rm -if kv
+ExecStart=podman run -d -p 3939:8000 -v kv:/data minioin/kv
+ExecStop=podman stop kv
+
+[Install]
+WantedBy=default.target
