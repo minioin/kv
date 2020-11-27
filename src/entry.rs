@@ -7,16 +7,18 @@ pub struct Entry {
 	updated: i64,
 	data_type: String,
 	data: Vec<u8>,
+	tags: Vec<String>,
 }
 
 impl Entry {
-	pub fn new(data: Vec<u8>, data_type: Mime) -> Self {
+	pub fn new(data: Vec<u8>, data_type: Mime, tags: Vec<String>) -> Self {
 		let created = Utc::now().timestamp_millis();
 		Self {
 			created,
 			updated: created,
 			data_type: data_type.to_string(),
 			data,
+			tags,
 		}
 	}
 

@@ -2,6 +2,7 @@ use kv::{
 	appstate::AppState,
 	entry::Entry,
 	error::{Error, Result},
+	query::Query,
 };
 use std::{path::PathBuf, str::FromStr};
 use tide::{http::Mime, Request, StatusCode};
@@ -42,6 +43,8 @@ async fn get_kv(req: Request<AppState>) -> tide::Result {
 async fn put_kv(mut req: Request<AppState>) -> tide::Result {
 	let bucket = req.param("bucket")?.to_owned();
 	let key = req.param("key")?.to_owned();
+	let query: Query = req.query()?;
+	let tags = query.tags;
 	let content_type = req
 		.content_type()
 		.unwrap_or_else(|| Mime::from_str("application/octet-stream").unwrap());
@@ -60,7 +63,7 @@ async fn put_kv(mut req: Request<AppState>) -> tide::Result {
 			old_entry.update(new_content);
 			old_entry
 		},
-		None => Entry::new(new_content, content_type),
+		None => Entry::new(new_content, content_type, tags),
 	};
 	let value = serde_cbor::to_vec(&entry).map_err(Error::from)?;
 	tree.insert(key, value).map_err(Error::from)?;
