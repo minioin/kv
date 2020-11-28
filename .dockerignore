@@ -1,0 +1,11 @@
+target
+.git
+.github
+Containerfile
+Readme
+rustfmt.toml
+*
+
+!src
+!Cargo.toml
+!Cargo.lock

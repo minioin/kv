@@ -5,6 +5,6 @@ pub struct AppState {
 
 impl AppState {
 	pub fn new(db: sled::Db) -> Self {
-		Self { db: db.clone() }
+		Self { db }
 	}
 }

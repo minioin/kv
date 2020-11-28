@@ -9,13 +9,15 @@ use tide::{http::Mime, Request, StatusCode};
 
 #[async_std::main]
 async fn main() -> Result<()> {
-	let path: PathBuf = dirs::data_dir().unwrap_or("/data".into()).join("kv");
+	let path: PathBuf = dirs::data_dir()
+		.unwrap_or_else(|| "/data".into())
+		.join("kv");
 	let db = sled::open(path.join("sled"))?;
 	let app_state = AppState::new(db);
 	let mut app = tide::with_state(app_state);
 	tide::log::start();
 
-	app.at("/:bucket/:key")
+	app.at("/kv/:bucket/:key")
 		.get(get_kv)
 		.post(put_kv)
 		.put(put_kv)
